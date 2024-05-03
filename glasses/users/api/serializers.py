@@ -24,3 +24,14 @@ class UserSerializer(serializers.ModelSerializer):
             email=validated_data["email"],
             password=validated_data["password"],
         )
+
+
+class UserPreferencesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["currency"]
+
+    def update(self, instance, validated_data):
+        instance.currency = validated_data.get("currency", instance.currency)
+        instance.save()
+        return instance

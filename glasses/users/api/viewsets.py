@@ -1,10 +1,16 @@
 from typing import Union
 
-from rest_framework import exceptions, mixins, viewsets
+from rest_framework import (
+    decorators,
+    exceptions,
+    mixins,
+    response,
+    viewsets,
+)
 
 from glasses.users.models import User
 
-from .serializers import UserSerializer
+from .serializers import UserPreferencesSerializer, UserSerializer
 
 
 class UserViewSet(
@@ -25,3 +31,10 @@ class UserViewSet(
 
     def list(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
+
+    @decorators.action(methods=["patch"], detail=False)
+    def set_currency(self, request, *args, **kwargs):
+        serializer = UserPreferencesSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.update(request.user, serializer.validated_data)
+        return response.Response(serializer.data)

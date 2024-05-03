@@ -4,6 +4,8 @@ This is a simple Django based web app, that offers you the ability to list and v
 
 ## Setup
 
+### Locally
+
 Create a virtual environment:
 
 ```bash
@@ -53,13 +55,13 @@ DATABASE_URL=psql://user:123@localhost:5432/glasses
 Once this is set, you should be able to launch the app:
 
 ```bash
-python manage.py runserver
+poetry run python manage.py runserver
 ```
 
 You should be able to see some warnings regarding pending migrations, because now you should migrate them to the database:
 
 ```bash
-python manage.py migrate
+poetry run python manage.py migrate
 ```
 
 Now the app should be up and running.
@@ -67,12 +69,28 @@ Now the app should be up and running.
 Because it does not make sense for admin users to sign up and log in like regular users, and because they are usually limited and manually added, you should create a “super user” or an admin as follows:
 
 ```bash
-python manage.py createsuperuser
+poetry run python manage.py createsuperuser
 ```
 
 You will get prompted to provide an email and a password.
 
 The admin user has the previliage to create and update frames and lenses.
+
+### Using Docker
+
+Just the following:
+
+```bash
+docker-compose up --build
+
+```
+
+Once the containers are launched make sure to run the migrations:
+
+```bash
+docker exec -i <web-container-name> sh -c "poetry run python manage.py migrate"
+
+```
 
 ---
 

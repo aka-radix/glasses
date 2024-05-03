@@ -88,7 +88,7 @@ docker-compose up --build
 Once the containers are launched make sure to run the migrations:
 
 ```bash
-docker exec -i <web-container-name> sh -c "poetry run python manage.py migrate"
+docker exec -it <web-container-name> sh -c "poetry run python manage.py migrate; poetry run python manage.py createsuperuser"
 
 ```
 

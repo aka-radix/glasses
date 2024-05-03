@@ -1,5 +1,6 @@
 from django.db import models
 from rest_framework import permissions, viewsets
+from rest_framework_simplejwt import authentication
 
 from glasses.products.models import Currency, Frame, Lens
 
@@ -17,10 +18,18 @@ class BaseProductViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.request.method in permissions.SAFE_METHODS:
-            permission_classes = [permissions.AllowAny]
+            permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
         else:
             permission_classes = [permissions.IsAdminUser]
         return [permission() for permission in permission_classes]
+
+    def get_authenticators(self):
+        if self.request.method in permissions.SAFE_METHODS:
+            authentication_classes = []
+        else:
+            authentication_classes = [authentication.JWTAuthentication]
+        return [auth() for auth in authentication_classes]
 
 
 class FrameViewSet(BaseProductViewSet):

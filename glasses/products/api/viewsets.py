@@ -17,7 +17,7 @@ class BaseProductViewSet(viewsets.ModelViewSet):
         return self.queryset.filter(currency=currency)
 
     def get_permissions(self):
-        if self.request.method in permissions.SAFE_METHODS:
+        if not self.request or self.request.method in permissions.SAFE_METHODS:
             permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
         else:
@@ -25,7 +25,7 @@ class BaseProductViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
     def get_authenticators(self):
-        if self.request.method in permissions.SAFE_METHODS:
+        if not self.request or self.request.method in permissions.SAFE_METHODS:
             authentication_classes = []
         else:
             authentication_classes = [authentication.JWTAuthentication]

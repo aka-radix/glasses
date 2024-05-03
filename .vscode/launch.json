@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Django",
+            "type": "debugpy",
+            "request": "launch",
+            "args": [
+                "runserver"
+            ],
+            "django": true,
+            "autoStartBrowser": false,
+            "program": "${workspaceFolder}/manage.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "DJANGO_SETTINGS_MODULE": "config.settings.local"
+            }
+        }
+    ]
+}

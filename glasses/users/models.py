@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 
+from glasses.products.models import Currency
+
 from .managers import UserManager
 
 
@@ -9,6 +11,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name="email address",
         max_length=255,
         unique=True,
+    )
+    currency = models.CharField(
+        choices=Currency.choices,
+        max_length=3,
+        default="USD",
     )
 
     is_active = models.BooleanField(default=True)

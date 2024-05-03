@@ -33,10 +33,10 @@ class BaseProductViewSet(viewsets.ModelViewSet):
 
 
 class FrameViewSet(BaseProductViewSet):
-    queryset = Frame.objects.filter(status=Frame.Status.ACTIVE, stock__gte=1)
+    queryset = Frame.objects.filter(status=Frame.Status.ACTIVE)
     serializer_class = FrameSerializer
 
 
 class LensViewSet(BaseProductViewSet):
-    queryset = Lens.objects.filter(stock__gte=1)
+    queryset = Lens.objects.all()
     serializer_class = LensSerializer
